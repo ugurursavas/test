@@ -13,5 +13,11 @@
   },
   "labs/panel_w_lags.ipynb": {
     "panel_w_lags.html": "0ec9608f"
+  },
+  "labs/gini_map_2019.ipynb": {
+    "gini_map_2019.html": "3a2f36e3"
+  },
+  "labs/chen_ntl_spatial_lags.ipynb": {
+    "chen_ntl_spatial_lags.html": "3d2a4994"
   }
 }
