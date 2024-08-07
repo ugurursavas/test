@@ -3028,6 +3028,106 @@ details})}{Saving figures (check here for details)}}\label{saving-figures-check-
 \end{Highlighting}
 \end{Shaded}
 
+\bookmarksetup{startatroot}
+
+\chapter{Panel spatial lags}\label{panel-spatial-lags}
+
+This document shows how one can calculate spatial lag of a series of
+variables over several periods of time, assuming the geography (e.g.,
+\(W\)) remains constant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas}
+\ImportTok{import}\NormalTok{ geopandas}
+\ImportTok{from}\NormalTok{ libpysal }\ImportTok{import}\NormalTok{ graph}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{NOTE} - This implementation relies on the new \texttt{graph}
+structures for spatial weights in PySAL. For that reason, a recent
+version of the library is required.
+
+\section{Data}\label{data}
+
+\begin{itemize}
+\tightlist
+\item
+  Tabular data
+\end{itemize}
+
+Note we drop the names as they're irrelevant here (we have unique IDs)
+and index the table on region ID and year. The resulting table contains
+only the variables to lag as columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{panel }\OperatorTok{=}\NormalTok{ (}
+\NormalTok{    pandas.read\_csv(}
+        \StringTok{\textquotesingle{}spatial\_lag\_panel\_data.csv\textquotesingle{}}\NormalTok{, }
+\NormalTok{        encoding }\OperatorTok{=} \StringTok{\textquotesingle{}ISO{-}8859{-}9\textquotesingle{}} \CommentTok{\# Turkish encoding}
+\NormalTok{    )}
+\NormalTok{    .set\_index([}\StringTok{\textquotesingle{}asdf\_id\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}year\textquotesingle{}}\NormalTok{])}
+\NormalTok{    .drop(columns}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}shapeName\textquotesingle{}}\NormalTok{])}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Geographic data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{geo }\OperatorTok{=}\NormalTok{ geopandas.read\_file(}\StringTok{\textquotesingle{}TUR\_ADM1.geojson\textquotesingle{}}\NormalTok{).set\_index(}\StringTok{\textquotesingle{}asdf\_id\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ERROR 1: PROJ: proj_create_from_database: Open of /opt/conda/envs/gds/share/proj failed
+\end{verbatim}
+
+\section{Lag computation}\label{lag-computation}
+
+First, we compute the spatial weights we will use. In this example, we
+pick queen contiguity, although other criteria are available and
+possibly valid too.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{w }\OperatorTok{=}\NormalTok{ (}
+\NormalTok{    graph.Graph.build\_contiguity(geo, rook}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+\NormalTok{    .transform(}\StringTok{\textquotesingle{}R\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we're ready to compute the lags. We approach this as a nested
+\texttt{for} loop, where we iterate through every year and, within that,
+through every variable. To make computation more efficient, we first
+generate the frame where results will be stored (\texttt{lags}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lags }\OperatorTok{=}\NormalTok{ pandas.DataFrame(index}\OperatorTok{=}\NormalTok{panel.index, columns}\OperatorTok{=}\NormalTok{panel.columns)}
+
+\ControlFlowTok{for}\NormalTok{ year }\KeywordTok{in}\NormalTok{ panel.index.get\_level\_values(}\StringTok{\textquotesingle{}year\textquotesingle{}}\NormalTok{).unique():}
+    \ControlFlowTok{for}\NormalTok{ var }\KeywordTok{in}\NormalTok{ lags.columns:}
+\NormalTok{        vals }\OperatorTok{=}\NormalTok{ panel.loc[pandas.IndexSlice[:, year], var]}
+\NormalTok{        lags.loc[vals.index, var] }\OperatorTok{=}\NormalTok{ w.lag(vals)}
+\end{Highlighting}
+\end{Shaded}
+
+We can now write the lagged values to disk:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lags.to\_csv(}\StringTok{\textquotesingle{}lagged.csv\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 
 
 

@@ -25,6 +25,7 @@ book:
     - general/overview.qmd
     - labs/w01_intro.ipynb
     - labs/w02_maps.ipynb
+    - labs/panel_w_lags.ipynb
     
 bibliography: references.bib
 
