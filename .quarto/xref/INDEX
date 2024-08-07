@@ -1,0 +1,14 @@
+{
+  "index.qmd": {
+    "index.html": "f2660d38"
+  },
+  "general/overview.qmd": {
+    "overview.html": "897d6db9"
+  },
+  "labs/w01_intro.ipynb": {
+    "w01_intro.html": "fbbd2a7d"
+  },
+  "labs/w02_maps.ipynb": {
+    "w02_maps.html": "ad42cabf"
+  }
+}
