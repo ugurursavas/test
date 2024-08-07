@@ -27,7 +27,10 @@ book:
     - labs/w02_maps.ipynb
     - labs/panel_w_lags.ipynb
     - labs/dani_style_informal.ipynb
-    - labs/chen_ntl_spatial_lags.ipynb
+    - labs/chen_ntl_spatial_lags.ipynb 
+    - labs/final_informal.ipynb
+
+
 
 	
     

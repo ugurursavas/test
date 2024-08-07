@@ -3674,6 +3674,433 @@ NameError: name 'moran2004' is not defined
 \end{Highlighting}
 \end{Shaded}
 
+\bookmarksetup{startatroot}
+
+\chapter{Spatial weights matrix and spatial
+lag}\label{spatial-weights-matrix-and-spatial-lag}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\NormalTok{sns.set\_style(}\StringTok{"darkgrid"}\NormalTok{)}
+\NormalTok{sns.set\_context(context}\OperatorTok{=}\StringTok{"paper"}\NormalTok{, font\_scale}\OperatorTok{=}\FloatTok{1.5}\NormalTok{, rc}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+\NormalTok{sns.}\BuiltInTok{set}\NormalTok{(font}\OperatorTok{=}\StringTok{"serif"}\NormalTok{)}
+\ImportTok{import}\NormalTok{ seaborn}
+
+\ImportTok{import}\NormalTok{ geopandas }\ImportTok{as}\NormalTok{ gpd}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\ImportTok{import}\NormalTok{ libpysal}
+\ImportTok{from}\NormalTok{ libpysal  }\ImportTok{import}\NormalTok{ weights}
+\ImportTok{from}\NormalTok{ pysal.explore }\ImportTok{import}\NormalTok{ esda }
+\ImportTok{import}\NormalTok{ esda}
+\ImportTok{from}\NormalTok{ esda.moran }\ImportTok{import}\NormalTok{ Moran, Moran\_Local}
+
+\ImportTok{import}\NormalTok{ splot}
+\ImportTok{from}\NormalTok{ splot.esda }\ImportTok{import}\NormalTok{ moran\_scatterplot, plot\_moran, lisa\_cluster}
+\ImportTok{from}\NormalTok{ splot.libpysal }\ImportTok{import}\NormalTok{ plot\_spatial\_weights}
+
+\ImportTok{from}\NormalTok{ giddy.directional }\ImportTok{import}\NormalTok{ Rose}
+\ImportTok{import}\NormalTok{ os}
+
+\ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ seed}
+\NormalTok{seed(}\DecValTok{12345}\NormalTok{)}
+
+\NormalTok{os.chdir(}\StringTok{\textquotesingle{}F:/projects/2024/informal\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{informal }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"F:/projects/2024/informal/results/informal\_spatial.csv"}\NormalTok{, encoding}\OperatorTok{=}\StringTok{\textquotesingle{}unicode\_escape\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{geojson\_data }\OperatorTok{=}\NormalTok{ gpd.read\_file(}\StringTok{"F:/projects/2024/informal/TUR\_ADM1.geojson"}\NormalTok{)}
+
+\NormalTok{merged\_data }\OperatorTok{=}\NormalTok{ pd.merge(geojson\_data, informal, how}\OperatorTok{=}\StringTok{\textquotesingle{}left\textquotesingle{}}\NormalTok{, left\_on}\OperatorTok{=}\StringTok{\textquotesingle{}asdf\_id\textquotesingle{}}\NormalTok{, right\_on}\OperatorTok{=}\StringTok{\textquotesingle{}asdf\_id\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2004"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}NaturalBreaks\textquotesingle{}}\NormalTok{, k}\OperatorTok{=}\DecValTok{5}\NormalTok{, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Spatial distribution of informal sector (}\SpecialCharTok{\% o}\StringTok{f GDP) in 2004: Five natural breaks\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.tight\_layout()}
+\NormalTok{ax.axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+C:\Users\uursavas\AppData\Local\anaconda3\Lib\site-packages\sklearn\cluster\_kmeans.py:1436: UserWarning: KMeans is known to have a memory leak on Windows with MKL, when there are less chunks than available threads. You can avoid it by setting the environment variable OMP_NUM_THREADS=1.
+  warnings.warn(
+\end{verbatim}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-4-output-2.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2004"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}Quantiles\textquotesingle{}}\NormalTok{,  cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Spatial distribution of informal sector (}\SpecialCharTok{\% o}\StringTok{f GDP) in 2004: Quantiles\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.tight\_layout()}
+\NormalTok{ax.axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-5-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2021"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}NaturalBreaks\textquotesingle{}}\NormalTok{, k}\OperatorTok{=}\DecValTok{5}\NormalTok{, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Spatial distribution of informal sector (}\SpecialCharTok{\% o}\StringTok{f GDP) in 2021: Five natural breaks\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.tight\_layout()}
+\NormalTok{ax.axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+C:\Users\uursavas\AppData\Local\anaconda3\Lib\site-packages\sklearn\cluster\_kmeans.py:1436: UserWarning: KMeans is known to have a memory leak on Windows with MKL, when there are less chunks than available threads. You can avoid it by setting the environment variable OMP_NUM_THREADS=1.
+  warnings.warn(
+\end{verbatim}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-6-output-2.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2021"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}Quantiles\textquotesingle{}}\NormalTok{,  cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{ax)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Spatial distribution of informal sector (}\SpecialCharTok{\% o}\StringTok{f GDP) in 2021: Quantiles\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.tight\_layout()}
+\NormalTok{ax.axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-7-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, axes }\OperatorTok{=}\NormalTok{ plt.subplots(nrows}\OperatorTok{=}\DecValTok{2}\NormalTok{, ncols}\OperatorTok{=}\DecValTok{2}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2004"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}NaturalBreaks\textquotesingle{}}\NormalTok{, k}\OperatorTok{=}\DecValTok{5}\NormalTok{, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{axes[}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{])}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2021"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}NaturalBreaks\textquotesingle{}}\NormalTok{, k}\OperatorTok{=}\DecValTok{5}\NormalTok{, cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{axes[}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2004"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}Quantiles\textquotesingle{}}\NormalTok{,  cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{axes[}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{])}
+\NormalTok{merged\_data.plot(column}\OperatorTok{=}\StringTok{"2021"}\NormalTok{, scheme}\OperatorTok{=}\StringTok{\textquotesingle{}Quantiles\textquotesingle{}}\NormalTok{,  cmap}\OperatorTok{=}\StringTok{\textquotesingle{}coolwarm\textquotesingle{}}\NormalTok{, legend}\OperatorTok{=}\VariableTok{True}\NormalTok{, ax}\OperatorTok{=}\NormalTok{axes[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+\NormalTok{plt.tight\_layout()}
+\NormalTok{axes[}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{].axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{].axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{].axis(}\StringTok{"off"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{].axis(}\StringTok{"off"}\NormalTok{)}
+
+\NormalTok{axes[}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{].title.set\_text(}\StringTok{\textquotesingle{}Spatial distrib. of informal sec. (}\SpecialCharTok{\% G}\StringTok{DP) in 2004: Five natural breaks\textquotesingle{}}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{].title.set\_text(}\StringTok{\textquotesingle{}Spatial distrib. of informal sec. (}\SpecialCharTok{\% G}\StringTok{DP) in 2021: Five natural breaks\textquotesingle{}}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{].title.set\_text(}\StringTok{\textquotesingle{}Spatial distrib. of informal sec. (}\SpecialCharTok{\% G}\StringTok{DP) in 2004: Quantiles\textquotesingle{}}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{].title.set\_text(}\StringTok{\textquotesingle{}Spatial distrib. of informal sec. (}\SpecialCharTok{\% G}\StringTok{DP) in 2021: Quantiles\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+C:\Users\uursavas\AppData\Local\anaconda3\Lib\site-packages\sklearn\cluster\_kmeans.py:1436: UserWarning: KMeans is known to have a memory leak on Windows with MKL, when there are less chunks than available threads. You can avoid it by setting the environment variable OMP_NUM_THREADS=1.
+  warnings.warn(
+C:\Users\uursavas\AppData\Local\anaconda3\Lib\site-packages\sklearn\cluster\_kmeans.py:1436: UserWarning: KMeans is known to have a memory leak on Windows with MKL, when there are less chunks than available threads. You can avoid it by setting the environment variable OMP_NUM_THREADS=1.
+  warnings.warn(
+\end{verbatim}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-8-output-2.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load weights matrix}
+\NormalTok{w\_queen }\OperatorTok{=}\NormalTok{ weights.contiguity.Queen.from\_dataframe(merged\_data)}
+
+
+\CommentTok{\# Row{-}standardize weights matrix}
+\NormalTok{w\_queen.transform }\OperatorTok{=} \StringTok{"R"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+C:\Users\uursavas\AppData\Local\Temp\ipykernel_19752\3796823966.py:2: FutureWarning: `use_index` defaults to False but will default to True in future. Set True/False directly to control this behavior and silence this warning
+  w_queen = weights.contiguity.Queen.from_dataframe(merged_data)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create spatial lag variables}
+\NormalTok{merged\_data[}\StringTok{"w\_2004"}\NormalTok{] }\OperatorTok{=}\NormalTok{ weights.lag\_spatial(w\_queen, merged\_data[}\StringTok{"2004"}\NormalTok{])}
+\NormalTok{merged\_data[}\StringTok{"w\_2021"}\NormalTok{] }\OperatorTok{=}\NormalTok{ weights.lag\_spatial(w\_queen, merged\_data[}\StringTok{"2021"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{merged\_data[[}\StringTok{"2004"}\NormalTok{, }\StringTok{"w\_2004"}\NormalTok{, }\StringTok{"2021"}\NormalTok{, }\StringTok{"w\_2021"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+& 2004 & w\_2004 & 2021 & w\_2021 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 32.246507 & 32.285411 & 27.963184 & 27.976770 \\
+1 & 33.744531 & 32.976798 & 29.467049 & 28.881355 \\
+2 & 32.554150 & 31.500792 & 28.388501 & 27.414615 \\
+3 & 34.154317 & 33.724340 & 30.042331 & 29.336063 \\
+4 & 32.385330 & 32.815203 & 28.537311 & 28.871858 \\
+... & ... & ... & ... & ... \\
+76 & 30.397265 & 28.646569 & 25.600179 & 24.339981 \\
+77 & 33.064559 & 32.355686 & 29.061970 & 28.332046 \\
+78 & 32.795890 & 31.436861 & 27.468281 & 27.367597 \\
+79 & 33.526188 & 33.762620 & 28.986277 & 29.301213 \\
+80 & 33.605297 & 33.306058 & 30.030058 & 28.821534 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\# Spatial autocorrelation}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x2004 }\OperatorTok{=}\NormalTok{ merged\_data[}\StringTok{"2004"}\NormalTok{]}
+\NormalTok{x2021 }\OperatorTok{=}\NormalTok{ merged\_data[}\StringTok{"2021"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{moran2004 }\OperatorTok{=}\NormalTok{ Moran(x2004, w\_queen)}
+\NormalTok{moran2021 }\OperatorTok{=}\NormalTok{ Moran(x2021, w\_queen)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(moran2004.I, moran2021.I)}
+
+\BuiltInTok{print}\NormalTok{(moran2004.p\_sim, moran2021.p\_sim)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0.6673411138948363 0.6516556145477524
+0.001 0.001
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\NormalTok{moran\_scatterplot(moran2004, zstandard}\OperatorTok{=}\VariableTok{False}\NormalTok{, ax }\OperatorTok{=}\NormalTok{ ax)}
+\NormalTok{ax.set\_xlabel(}\StringTok{"Informal sector 2004"}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{"Spatial lag of informal sector 2004"}\NormalTok{)}
+\NormalTok{ax.set\_title(}\StringTok{"Moran\textquotesingle{}s I: 0.667"}\NormalTok{)}
+
+\NormalTok{ax.text(}\DecValTok{31}\NormalTok{,}\DecValTok{30}\NormalTok{, }\StringTok{\textquotesingle{}LL\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(}\FloatTok{32.5}\NormalTok{,}\FloatTok{33.5}\NormalTok{, }\StringTok{\textquotesingle{}HH\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(}\DecValTok{33}\NormalTok{,}\DecValTok{31}\NormalTok{, }\StringTok{\textquotesingle{}HL\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(}\DecValTok{29}\NormalTok{,}\DecValTok{33}\NormalTok{, }\StringTok{\textquotesingle{}LH\textquotesingle{}}\NormalTok{)}
+
+
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-17-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\NormalTok{moran\_scatterplot(moran2021, zstandard}\OperatorTok{=}\VariableTok{False}\NormalTok{, ax }\OperatorTok{=}\NormalTok{ ax)}
+\NormalTok{ax.set\_xlabel(}\StringTok{"Informal sector 2021"}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{"Spatial lag of informal sector 2021"}\NormalTok{)}
+\NormalTok{ax.set\_title(}\StringTok{"Moran\textquotesingle{}s I: 0.651"}\NormalTok{)}
+
+\NormalTok{ax.text(}\DecValTok{25}\NormalTok{,}\FloatTok{26.5}\NormalTok{, }\StringTok{\textquotesingle{}LL\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(}\FloatTok{29.5}\NormalTok{,}\FloatTok{28.2}\NormalTok{, }\StringTok{\textquotesingle{}HH\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(}\DecValTok{29}\NormalTok{,}\DecValTok{26}\NormalTok{, }\StringTok{\textquotesingle{}HL\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.text(}\DecValTok{25}\NormalTok{,}\DecValTok{29}\NormalTok{, }\StringTok{\textquotesingle{}LH\textquotesingle{}}\NormalTok{)}
+
+
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-18-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Evolution of spatial dependence}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create multidimentional array}
+\NormalTok{dfa }\OperatorTok{=}\NormalTok{ merged\_data.loc[:,}\StringTok{\textquotesingle{}2004\textquotesingle{}}\NormalTok{:}\StringTok{\textquotesingle{}2021\textquotesingle{}}\NormalTok{].values}
+\NormalTok{dfa}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+array([[32.24650724, 31.68800442, 31.1363712 , ..., 28.03218968,
+        27.96208341, 27.96318404],
+       [33.74453059, 33.17080523, 32.58001702, ..., 29.37008434,
+        29.40589497, 29.46704928],
+       [32.55414979, 32.06300928, 31.46635918, ..., 28.10038133,
+        28.12354415, 28.3885011 ],
+       ...,
+       [32.7958902 , 32.16115138, 31.45265665, ..., 28.05074082,
+        27.83310122, 27.46828148],
+       [33.52618756, 33.04539777, 32.4438166 , ..., 28.94672984,
+        28.86962828, 28.98627677],
+       [33.60529683, 33.15259018, 32.63714094, ..., 29.88145291,
+        29.92967381, 30.03005795]])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create array of years}
+\NormalTok{years }\OperatorTok{=}\NormalTok{ np.arange(}\DecValTok{2004}\NormalTok{,}\DecValTok{2022}\NormalTok{)}
+\NormalTok{years}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+array([2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+       2015, 2016, 2017, 2018, 2019, 2020, 2021])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mits }\OperatorTok{=}\NormalTok{ [Moran(cs, w\_queen) }\ControlFlowTok{for}\NormalTok{ cs }\KeywordTok{in}\NormalTok{ dfa.T]}
+\NormalTok{res }\OperatorTok{=}\NormalTok{ np.array([(m.I, m.EI, m.p\_sim, m.z\_sim) }\ControlFlowTok{for}\NormalTok{ m }\KeywordTok{in}\NormalTok{ mits])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\NormalTok{plt.plot(years, res[:, }\DecValTok{0}\NormalTok{])}
+
+\CommentTok{\# Set integer ticks on the x{-}axis}
+\NormalTok{plt.xticks(years)}
+\NormalTok{plt.gca().xaxis.set\_major\_locator(plt.MaxNLocator(integer}\OperatorTok{=}\VariableTok{True}\NormalTok{))}
+
+\CommentTok{\# Add labels}
+\NormalTok{plt.xlabel(}\StringTok{"Years"}\NormalTok{)}
+\NormalTok{plt.ylabel(}\StringTok{"Moran\textquotesingle{}s I"}\NormalTok{)}
+
+\CommentTok{\# Show the plot}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-23-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\#\# Evolution of regional disparities}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sigma }\OperatorTok{=}\NormalTok{ dfa.std(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{plt.plot(years, sigma)}
+\NormalTok{plt.xticks(years)}
+\NormalTok{plt.gca().xaxis.set\_major\_locator(plt.MaxNLocator(integer}\OperatorTok{=}\VariableTok{True}\NormalTok{))}
+\CommentTok{\#plt.title("Sigma Convergence")}
+\NormalTok{plt.ylabel(}\StringTok{\textquotesingle{}Stand. Deviation\textquotesingle{}}\NormalTok{)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-25-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plt.plot(years, res[:,}\DecValTok{0}\NormalTok{], label}\OperatorTok{=}\StringTok{"Spatial Dep."}\NormalTok{)}
+\NormalTok{plt.plot(years, sigma,  label}\OperatorTok{=}\StringTok{"Disparities"}\NormalTok{)}
+\NormalTok{plt.xticks(years)}
+\NormalTok{plt.gca().xaxis.set\_major\_locator(plt.MaxNLocator(integer}\OperatorTok{=}\VariableTok{True}\NormalTok{))}
+\NormalTok{plt.legend(bbox\_to\_anchor}\OperatorTok{=}\NormalTok{(}\FloatTok{1.31}\NormalTok{,}\DecValTok{1}\NormalTok{), loc}\OperatorTok{=}\StringTok{"upper right"}\NormalTok{)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-26-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# create figure and axis objects with subplots()}
+\NormalTok{fig,ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\CommentTok{\# make a plot}
+\NormalTok{ax.plot(years, res[:,}\DecValTok{0}\NormalTok{], color}\OperatorTok{=}\StringTok{"royalblue"}\NormalTok{)}
+\CommentTok{\# set y{-}axis label}
+\NormalTok{ax.set\_ylabel(}\StringTok{"Moran\textquotesingle{}s I"}\NormalTok{, color}\OperatorTok{=}\StringTok{"royalblue"}\NormalTok{)}
+\CommentTok{\# twin object for two different y{-}axis on the sample plot}
+\NormalTok{ax2}\OperatorTok{=}\NormalTok{ax.twinx()}
+\CommentTok{\# make a plot with different y{-}axis using second axis object}
+\NormalTok{ax2.plot(years, sigma, color}\OperatorTok{=}\StringTok{"orange"}\NormalTok{)}
+\NormalTok{ax2.set\_ylabel(}\StringTok{"Stand. Deviation"}\NormalTok{, color}\OperatorTok{=}\StringTok{"darkorange"}\NormalTok{)}
+\NormalTok{plt.xticks(years)}
+\NormalTok{plt.gca().xaxis.set\_major\_locator(plt.MaxNLocator(integer}\OperatorTok{=}\VariableTok{True}\NormalTok{))}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-27-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\# LISA scatterplot and map}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Lmoran2004 }\OperatorTok{=}\NormalTok{ Moran\_Local(x2004, w\_queen)}
+\NormalTok{Lmoran2021 }\OperatorTok{=}\NormalTok{ Moran\_Local(x2021, w\_queen)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot LISA map}
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{14}\NormalTok{,}\DecValTok{12}\NormalTok{))}
+\NormalTok{lisa\_cluster(Lmoran2004, merged\_data, p}\OperatorTok{=}\FloatTok{0.01}\NormalTok{, figsize }\OperatorTok{=}\NormalTok{ (}\DecValTok{16}\NormalTok{,}\DecValTok{12}\NormalTok{),ax}\OperatorTok{=}\NormalTok{ax)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Spatial clusters in 2004\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-30-output-1.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot LISA map}
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{14}\NormalTok{,}\DecValTok{12}\NormalTok{))}
+\NormalTok{lisa\_cluster(Lmoran2021, merged\_data, p}\OperatorTok{=}\FloatTok{0.01}\NormalTok{, figsize }\OperatorTok{=}\NormalTok{ (}\DecValTok{16}\NormalTok{,}\DecValTok{12}\NormalTok{),ax}\OperatorTok{=}\NormalTok{ax)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Spatial clusters in 2021\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{labs/final_informal_files/figure-pdf/cell-31-output-1.png}
 
 
 
