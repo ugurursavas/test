@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "spatial data science"
-  author: "Gabriele Filomena and Elisabetta Pietrostefani"
+  title: "spatial data science2"
+  author: "ugur and Elisabetta Pietrostefani"
   date: today
 
   page-footer:
