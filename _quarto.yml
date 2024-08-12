@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "spatial 33334"
+  title: "spatial data science"
   author: "Gabriele Filomena and Elisabetta Pietrostefani"
   date: today
 
