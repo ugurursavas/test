@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "spatial 33333"
+  title: "spatial wdd3333"
   author: "Gabriele Filomena and Elisabetta Pietrostefani"
   date: today
 
@@ -24,7 +24,6 @@ book:
     - index.qmd
     - general/overview.qmd
     - labs/w01_intro.ipynb
-    - labs/w02_maps.ipynb
     - labs/panel_w_lags.ipynb
     - labs/dani_style_informal.ipynb
     - labs/chen_ntl_spatial_lags.ipynb 
