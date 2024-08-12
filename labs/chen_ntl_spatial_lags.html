@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>spatial - 3&nbsp; Panel spatial lags</title>
+<title>spatial 33333</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../labs/dani_style_informal.html" rel="next">
-<link href="../labs/w02_maps.html" rel="prev">
+<link href="../labs/final_informal.html" rel="next">
+<link href="../labs/dani_style_informal.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -103,40 +103,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body class="nav-sidebar docked fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -145,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/panel_w_lags.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel spatial lags</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../labs/chen_ntl_spatial_lags.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">chen_ntl_spatial_lags.html</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -160,10 +131,10 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">spatial</a> 
+      <a href="../">spatial 33333</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/GDSL-UL/wma" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../spatial.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../spatial-33333.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -200,7 +171,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/panel_w_lags.html" class="sidebar-item-text sidebar-link active">
+  <a href="../labs/panel_w_lags.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel spatial lags</span></span></a>
   </div>
 </li>
@@ -212,7 +183,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../labs/chen_ntl_spatial_lags.html" class="sidebar-item-text sidebar-link">
+  <a href="../labs/chen_ntl_spatial_lags.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">chen_ntl_spatial_lags.html</span></span></a>
   </div>
 </li>
@@ -227,96 +198,141 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">3.1</span> Data</a></li>
-  <li><a href="#lag-computation" id="toc-lag-computation" class="nav-link" data-scroll-target="#lag-computation"><span class="header-section-number">3.2</span> Lag computation</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.dev/GDSL-UL/wma/blob/main/labs/panel_w_lags.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Panel spatial lags</span></h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>This document shows how one can calculate spatial lag of a series of variables over several periods of time, assuming the geography (e.g., <span class="math inline">\(W\)</span>) remains constant.</p>
-<div id="583d1870-52b7-453c-98aa-c4c56548f525" class="cell" data-execution_count="1">
+<div id="b166aa8a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> libpysal <span class="im">import</span> graph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> libpysal <span class="im">import</span> graph</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>NOTE</strong> - This implementation relies on the new <code>graph</code> structures for spatial weights in PySAL. For that reason, a recent version of the library is required.</p>
-<section id="data" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="data"><span class="header-section-number">3.1</span> Data</h2>
-<ul>
-<li>Tabular data</li>
-</ul>
-<p>Note we drop the names as they’re irrelevant here (we have unique IDs) and index the table on region ID and year. The resulting table contains only the variables to lag as columns.</p>
-<div id="dc59bdbd-5adc-4680-840a-4f18b08bbd6a" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>panel <span class="op">=</span> (</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    pandas.read_csv(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'spatial_lag_panel_data.csv'</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        encoding <span class="op">=</span> <span class="st">'ISO-8859-9'</span> <span class="co"># Turkish encoding</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    .set_index([<span class="st">'asdf_id'</span>, <span class="st">'year'</span>])</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    .drop(columns<span class="op">=</span>[<span class="st">'shapeName'</span>])</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="344dccc5" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>os.chdir(<span class="st">'F:/projects/2024/ursavas_alahmadi_chen/data/ntl_data'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li>Geographic data</li>
-</ul>
-<div id="d584696e-deaa-4b45-af5b-fa731421c7d6" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> geopandas.read_file(<span class="st">'TUR_ADM1.geojson'</span>).set_index(<span class="st">'asdf_id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ERROR 1: PROJ: proj_create_from_database: Open of /opt/conda/envs/gds/share/proj failed</code></pre>
+<div id="96a46ddf" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>panel <span class="op">=</span> (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pandas.read_csv(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'spatial.csv'</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        encoding <span class="op">=</span> <span class="st">'ISO-8859-9'</span> <span class="co"># Turkish encoding</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    .set_index([<span class="st">'asdf_id'</span>, <span class="st">'year'</span>])</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="da6cb4ed" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> gpd.read_file(<span class="st">"F:/projects/2024/informal/TUR_ADM1.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="lag-computation" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="lag-computation"><span class="header-section-number">3.2</span> Lag computation</h2>
-<p>First, we compute the spatial weights we will use. In this example, we pick queen contiguity, although other criteria are available and possibly valid too.</p>
-<div id="0e33043d-882f-4e98-b52c-e0b77a139215" class="cell" data-execution_count="4">
+<div id="c3a42f25" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    graph.Graph.build_contiguity(geo, rook<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .transform(<span class="st">'R'</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we’re ready to compute the lags. We approach this as a nested <code>for</code> loop, where we iterate through every year and, within that, through every variable. To make computation more efficient, we first generate the frame where results will be stored (<code>lags</code>).</p>
-<div id="5e71ec70-4505-4034-9317-aa8a2de8e441" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lags <span class="op">=</span> pandas.DataFrame(index<span class="op">=</span>panel.index, columns<span class="op">=</span>panel.columns)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> year <span class="kw">in</span> panel.index.get_level_values(<span class="st">'year'</span>).unique():</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> lags.columns:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        vals <span class="op">=</span> panel.loc[pandas.IndexSlice[:, year], var]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        lags.loc[vals.index, var] <span class="op">=</span> w.lag(vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="73d02376" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>w.neighbors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>{0: (36, 41, 46, 57, 61, 63),
+ 1: (25, 32, 41, 54, 80),
+ 2: (19, 24, 31, 38, 52, 53, 74),
+ 3: (17, 30, 37, 44, 59, 75),
+ 4: (23, 66, 71, 77),
+ 5: (19, 38, 43, 52, 57, 58),
+ 6: (11, 30, 64),
+ 7: (24, 40, 55, 58),
+ 8: (20, 21, 40, 53, 55),
+ 9: (10, 18, 22, 31, 48, 50, 52),
+ 10: (9, 50, 52, 60, 61),
+ 11: (6, 30, 44),
+ 12: (42, 45, 78),
+ 13: (17, 25, 56, 59, 67, 79),
+ 14: (29, 30, 34, 64, 72),
+ 15: (18, 20, 31, 51, 53, 65),
+ 16: (25, 28, 29, 30, 59, 73),
+ 17: (3, 13, 59, 67, 75),
+ 18: (9, 15, 22, 26, 31, 42, 65, 78),
+ 19: (2, 5, 24, 38, 58),
+ 20: (8, 15, 51, 53, 76),
+ 21: (8, 27, 70),
+ 22: (9, 18, 23, 42, 45, 48),
+ 23: (4, 22, 45, 48, 66, 68, 77),
+ 24: (2, 7, 19, 55, 58, 74),
+ 25: (1, 13, 16, 28, 54, 56, 59, 80),
+ 26: (18, 65, 78),
+ 27: (21, 49, 70),
+ 28: (16, 25, 29, 54, 73),
+ 29: (14, 16, 28, 30, 33, 34, 54, 69, 73),
+ 30: (3, 6, 11, 14, 16, 29, 44, 59, 64),
+ 31: (2, 9, 15, 18, 52, 53),
+ 32: (1, 36, 41, 47, 63, 80),
+ 33: (29, 34, 62, 69, 72),
+ 34: (14, 29, 33, 72),
+ 35: (75, 79),
+ 36: (0, 32, 63),
+ 37: (3, 44),
+ 38: (2, 5, 19, 52),
+ 39: (49, 51, 70),
+ 40: (7, 8, 55),
+ 41: (0, 1, 32, 46, 54, 63, 69),
+ 42: (12, 18, 22, 45, 78),
+ 43: (5, 52, 57),
+ 44: (3, 11, 30, 37),
+ 45: (12, 22, 23, 42, 68),
+ 46: (0, 41, 60, 61, 69, 77),
+ 47: (32,),
+ 48: (9, 22, 23, 50, 77),
+ 49: (27, 39, 70),
+ 50: (9, 10, 48, 60, 77),
+ 51: (15, 20, 39, 65, 76),
+ 52: (2, 5, 9, 10, 31, 38, 43, 57, 61),
+ 53: (2, 8, 15, 20, 31, 55, 74),
+ 54: (1, 25, 28, 29, 41, 69),
+ 55: (7, 8, 24, 40, 53, 74),
+ 56: (13, 25, 67, 79, 80),
+ 57: (0, 5, 43, 52, 61),
+ 58: (5, 7, 19, 24),
+ 59: (3, 13, 16, 17, 25, 30),
+ 60: (10, 46, 50, 61, 77),
+ 61: (0, 10, 46, 52, 57, 60),
+ 62: (33, 66, 69, 71),
+ 63: (0, 32, 36, 41),
+ 64: (6, 14, 30, 72),
+ 65: (15, 18, 26, 51),
+ 66: (4, 23, 62, 68, 71),
+ 67: (13, 17, 56, 75, 79),
+ 68: (23, 45, 66),
+ 69: (29, 33, 41, 46, 54, 62, 71, 77),
+ 70: (21, 27, 39, 49),
+ 71: (4, 62, 66, 69, 77),
+ 72: (14, 33, 34, 64),
+ 73: (16, 28, 29),
+ 74: (2, 24, 53, 55),
+ 75: (3, 17, 35, 67, 79),
+ 76: (20, 51),
+ 77: (4, 23, 46, 48, 50, 60, 69, 71),
+ 78: (12, 18, 26, 42),
+ 79: (13, 35, 56, 67, 75),
+ 80: (1, 25, 32, 56)}</code></pre>
 </div>
-<p>We can now write the lagged values to disk:</p>
-<div id="9aedee0d-4b3b-4e01-86d3-100b22b904be" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lags.to_csv(<span class="st">'lagged.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fbdf39d6" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lags <span class="op">=</span> pandas.DataFrame(index<span class="op">=</span>panel.index, columns<span class="op">=</span>panel.columns)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> year <span class="kw">in</span> panel.index.get_level_values(<span class="st">'year'</span>).unique():</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> lags.columns:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        vals <span class="op">=</span> panel.loc[pandas.IndexSlice[:, year], var]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        lags.loc[vals.index, var] <span class="op">=</span> w.lag(vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1cc81225" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lags.to_csv(<span class="st">'lagged_ntl_panel.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -708,13 +724,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../labs/w02_maps.html" class="pagination-link  aria-label=" &lt;span="" maps="" in="" python&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Static Maps in Python</span></span>
+      <a href="../labs/dani_style_informal.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">dani_style_informal.html</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../labs/dani_style_informal.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>dani_style_informal.html</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">dani_style_informal.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../labs/final_informal.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>final_informal.html</span>">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">final_informal.html</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -726,7 +742,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/GDSL-UL/wma/blob/main/labs/panel_w_lags.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.dev/GDSL-UL/wma/blob/main/labs/chen_ntl_spatial_lags.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
